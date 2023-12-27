@@ -1,15 +1,18 @@
 //install redux then import it. NOTE: This is a node.js example, for REACT use "Import" method instead of require
 const redux = require("redux");
-//**STORE** CREATE STORE
+const axios = require("axios");
+const thunkMiddleware = require("redux-thunk").default;
+const applyMiddleware = redux.applyMiddleware;
+//**STORE** CREATE STORE, INCLUDE MIDDLEWARE IF USED
 const createStore = redux.createStore;
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 //SET 3 INITIAL STATES
 const initialState = {
   loading: false,
   users: [],
   error: "",
 };
-//**ACTIONS**DEFINE ACTIONS
+//DEFINE STATES
 const FETCH_USERS_REQUESTED = "FETCH_USERS_REQUESTED";
 const FETCH_USERS_SUCCEEDED = "FETCH_USERS_SUCCEEDED";
 const FETCH_USERS_FAILED = "FETCH_USERS_FAILED";
@@ -52,4 +55,17 @@ const reducer = (state = initialState, action) => {
         error: action.payload,
       };
   }
+};
+///**ACTIONS */
+const fetchUsers = () => {
+  return function (dispatch) {
+    axios
+      .get("https://jsonplaceholders.typicode/users")
+      .then((response) => {
+        const users = response.data.map((user) => user.id);
+      })
+      .catch((error) => {
+        //error.message is the error message
+      });
+  };
 };
