@@ -34,7 +34,7 @@ const fetchUsersFailure = (error) => {
     payload: error,
   };
 };
-///**REDUCER**CREATE REDUCER USING SWITCH STATEMENT TO DEFINE WHAT HAPPENDS IN EACH SITUATION(case)
+///**REDUCER**CREATE REDUCER USING SWITCH STATEMENT TO DEFINE WHAT HAPPENDS IN EACH SITUATION(case for each situation)
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_USERS_REQUESTED:
